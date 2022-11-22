@@ -1,64 +1,66 @@
-// var cardName = document.querySelector(".card-name");
-// var movieYear = document.querySelector(".movie-year");
-// var rating = document.querySelector(".rating");
-// var poster = document.querySelector(".poster");
-// var synopsis = document.querySelector(".synopsis");
-var cardWrapper = document.querySelector(".card-wrapper");
-var col = document.querySelector(".col");
+var grid = document.querySelector(".grid");
 
-
-const options = {
-    method: 'GET',
-    headers: {
-        'X-RapidAPI-Key': '8748a9f6e0msh46c36b26f7e0d08p19406djsne19cef7ec6ae',
-        'X-RapidAPI-Host': 'unogsng.p.rapidapi.com'
-    }
-};
-
-fetch('https://unogsng.p.rapidapi.com/search?limit=100', options)
-    .then(function (response) {
-        console.log(response);
-        return response.json();
-    })
-    .then(function (listOfMovies) {
-        console.log(listOfMovies);
-        for (let i = 0; i < listOfMovies.results.length; i++) {
-            var poster = document.createElement("img");
-            poster.setAttribute("src", listOfMovies.results[i].poster);
-            col.appendChild(poster);
-            console.log(poster);
-
-            var cardName = document.createElement("h2");
-            cardName.classList = "card border-0 card-body p-2 card-name text-center";
-            cardName.textContent = listOfMovies.results[i].title;
-            col.appendChild(cardName);
-            console.log(cardName);
-
-            var movieYear = document.createElement("p");
-            movieYear.classList = "fw-ligh text-start mb-0";
-            movieYear.textContent = "Year:" + " " + listOfMovies.results[i].year;
-            col.appendChild(movieYear);
-            console.log(movieYear);
-
-            var rating = document.createElement("p2");
-            rating.classList = "fw-ligh text-start mb-0";
-            rating.textContent = "Rating:" + " " + listOfMovies.results[i].imdbrating;
-            col.appendChild(rating);
-            console.log(rating);
-
-            var button = document.createElement("button");
-            button.classList = "w-100 btn btn-lg btn-outline-dark btn-sm";
-            button.textContent = "Find Out More";
-            col.appendChild(button);
-            console.log(button);
-
-            var type = listOfMovies.results[i].vtype;
-            console.log(type);
-            var synopsys = listOfMovies.results[i].synopsis;
-            console.log(synopsys);
-
-            // TODO: if rating is null or undefined = N/A.
-            // TODO: if img is null add default img.
-
+    const options = {
+        method: 'GET',
+        headers: {
+            'X-RapidAPI-Key': '8748a9f6e0msh46c36b26f7e0d08p19406djsne19cef7ec6ae',
+            'X-RapidAPI-Host': 'unogsng.p.rapidapi.com'
         }
-    })
+    };
+    
+    fetch('https://unogsng.p.rapidapi.com/search?limit=100', options)
+        .then(function (response) {
+            console.log(response);
+            return response.json();
+        })
+        .then(function (data) {
+            console.log(data);
+            
+            for (var i = 0; i < data.results.length; i++) {
+                var movieCard = document.createElement("div");
+                movieCard.classList = "movie-card p-1 block max-w-sm bg-white border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 opacity-100 hover:opacity-90 cursor-default max-w-sm h-auto transition-shadow ease-in-out duration-300 shadow-none hover:shadow-xl";
+                grid.appendChild(movieCard);
+    
+                var type = document.createElement("span");
+    
+                if (data.results[i].vtype === "movie") {
+                    type.classList.add("movie-type");
+                    type.textContent = "Movie"; 
+                    movieCard.appendChild(type);
+                }   else if (data.results[i].vtype === "series") {
+                    type.classList.add("series-type");
+                    type.textContent = "Series";
+                    movieCard.appendChild(type);
+                };
+            // TODO: Create div
+                var poster = document.createElement("img");
+                poster.classList = ("poster");
+                poster.setAttribute("src", data.results[i].poster);
+                if (!data.results[i].poster || data.results[i].poster === "0") {
+                    poster.setAttribute("src", "./assets/img/image-does-not-exist.jpg");
+                    movieCard.appendChild(poster);
+                }
+                    movieCard.appendChild(poster);
+                
+                var movieTitle = document.createElement("h2");
+                movieTitle.classList = "title mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white text-center";
+                movieTitle.textContent = data.results[i].title;
+                movieCard.appendChild(movieTitle);
+    
+                var movieYear = document.createElement("p");
+                movieYear.classList = "font-normal text-sm p-1 text-gray-700 dark:text-gray-400";
+                movieYear.textContent = "Year:" + " " + data.results[i].year;
+                movieCard.appendChild(movieYear);
+    
+                var rating = document.createElement("p");
+                rating.classList = "font-normal text-sm p-1 text-gray-700 dark:text-gray-400";
+                rating.textContent = "IMDb:" + " " + data.results[i].imdbrating;
+                if (!data.results[i].imdbrating) {
+                    rating.classList = "font-normal text-sm p-1 text-gray-700 dark:text-gray-400";
+                    rating.textContent = "IMDb: N/A";
+                }
+                    movieCard.appendChild(rating);
+            
+            }
+        });
+    
