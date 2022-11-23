@@ -20,13 +20,11 @@ var grid = document.querySelector(".grid");
 
 fetch(API_KEY, options)
   .then(function (response) {
-
     return response.json();
   })
   .then(function (data) {
     renderedFilmsList = data.results;
     renderFilms(renderedFilmsList);
-    
   });
 var renderFilms = function (filmsData) {
   for (var i = 0; i < filmsData.length; i++) {
@@ -82,9 +80,7 @@ var renderFilms = function (filmsData) {
 };
 
 sortByRaiting.addEventListener("change", function (e) {
-  console.log(e);
   mainBlock.innerHTML = "";
-  console.log(mainBlock);
   var value = e.target.value;
   if (value === "asc") {
     renderedFilmsList.sort(sortAsc);
