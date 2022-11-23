@@ -1,4 +1,4 @@
-var API_KEY = "https://unogsng.p.rapidapi.com/search?orderby=rating&limit=10";
+var API_KEY = "https://unogsng.p.rapidapi.com/search?limit=100";
 var renderedFilmsList = [];
 var sortByRaiting = document.getElementById("sort-by-rating");
 var mainBlock = document.getElementById("main-colm");
@@ -18,14 +18,15 @@ function sortAsc(a, b) {
 
 var grid = document.querySelector(".grid");
 
-fetch("https://unogsng.p.rapidapi.com/search?limit=5", options)
+fetch(API_KEY, options)
   .then(function (response) {
-    console.log(response);
+
     return response.json();
   })
   .then(function (data) {
     renderedFilmsList = data.results;
     renderFilms(renderedFilmsList);
+    
   });
 var renderFilms = function (filmsData) {
   for (var i = 0; i < filmsData.length; i++) {
@@ -83,16 +84,14 @@ var renderFilms = function (filmsData) {
 sortByRaiting.addEventListener("change", function (e) {
   console.log(e);
   mainBlock.innerHTML = "";
+  console.log(mainBlock);
   var value = e.target.value;
   if (value === "asc") {
-    mainBlock.innerHTML = "";
     renderedFilmsList.sort(sortAsc);
-    console.log(renderFilms(renderedFilmsList));
   } else {
     renderedFilmsList.sort(sortDescend);
   }
-  mainBlock.innerHTML = "";
+
   console.log(renderedFilmsList);
   renderFilms(renderedFilmsList);
-  console.log(renderFilms(renderedFilmsList));
 });
