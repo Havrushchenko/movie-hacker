@@ -16,8 +16,6 @@ function sortAsc(a, b) {
   return a.imdbrating - b.imdbrating;
 }
 
-var grid = document.querySelector(".grid");
-
 fetch(API_KEY, options)
   .then(function (response) {
     return response.json();
@@ -31,7 +29,7 @@ var renderFilms = function (filmsData) {
     var movieCard = document.createElement("div");
     movieCard.classList =
       "movie-card p-1 block max-w-sm bg-white border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 opacity-100 hover:opacity-90 cursor-default max-w-sm h-auto transition-shadow ease-in-out duration-300 shadow-none hover:shadow-xl";
-    grid.appendChild(movieCard);
+    mainBlock.appendChild(movieCard);
 
     var type = document.createElement("span");
 
