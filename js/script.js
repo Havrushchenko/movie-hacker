@@ -96,3 +96,17 @@ sortByRaiting.addEventListener("change", function (e) {
   }
   renderFilms(renderedFilmsList);
 });
+
+// function filterByMovie(renderedFilmsLis){
+//   if (filmsData.vtype === "movie"){
+//     return true
+//   } else if("movie" === "series") {
+//     return
+//   }
+// }
+function typeMovie(vtype) {
+  return vtype === "movie";
+}
+console.log(vtype);
+var filterByMovie = renderedFilmsList.filter(typeMovie);
+console.log(filterByMovie);
