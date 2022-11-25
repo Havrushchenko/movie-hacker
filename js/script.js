@@ -15,7 +15,6 @@ function sortDescend(a, b, sortField) {
 function sortAsc(a, b, sortField) {
   return a[sortField] - b[sortField];
 }
-
 fetch(API_KEY, options)
   .then(function (response) {
     return response.json();
@@ -25,14 +24,14 @@ fetch(API_KEY, options)
     renderFilms(renderedFilmsList);
   });
 var renderFilms = function (filmsData) {
+  var loader = document.querySelector(".loader")
+  loader.style.visibility = "hidden";
   for (var i = 0; i < filmsData.length; i++) {
     var movieCard = document.createElement("div");
     movieCard.classList =
       "movie-card p-1 block max-w-sm bg-white border border-gray-200 shadow-md hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 opacity-100 hover:opacity-90 cursor-default max-w-sm h-auto transition-shadow ease-in-out duration-300 shadow-none hover:shadow-xl";
     mainBlock.appendChild(movieCard);
-
     var type = document.createElement("span");
-
     if (filmsData[i].vtype === "movie") {
       type.classList.add("movie-type");
       type.textContent = "Movie";
@@ -50,7 +49,6 @@ var renderFilms = function (filmsData) {
       movieCard.appendChild(poster);
     }
     movieCard.appendChild(poster);
-
     var movieTitle = document.createElement("h2");
     movieTitle.classList =
       "title mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white text-center";
@@ -75,7 +73,6 @@ var renderFilms = function (filmsData) {
     movieCard.appendChild(rating);
   }
 };
-
 sortByRaiting.addEventListener("change", function (e) {
   mainBlock.innerHTML = "";
   var value = e.target.value;
