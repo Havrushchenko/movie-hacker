@@ -24,6 +24,8 @@ fetch(API_KEY, options)
     renderedFilmsList = data.results;
     renderFilms(renderedFilmsList);
   });
+var loader = document.querySelector(".loader")
+loader.style.visibility = "hidden";
 var renderFilms = function (filmsData) {
   for (var i = 0; i < filmsData.length; i++) {
     var movieCard = document.createElement("div");
