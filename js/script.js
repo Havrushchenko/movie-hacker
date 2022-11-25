@@ -9,11 +9,11 @@ const options = {
     "X-RapidAPI-Host": "unogsng.p.rapidapi.com",
   },
 };
-function sortDescend(a, b) {
-  return b.imdbrating - a.imdbrating;
+function sortDescend(a, b, sortField) {
+  return b[sortField] - a[sortField];
 }
-function sortAsc(a, b) {
-  return a.imdbrating - b.imdbrating;
+function sortAsc(a, b, sortField) {
+  return a[sortField] - b[sortField];
 }
 
 fetch(API_KEY, options)
@@ -42,7 +42,6 @@ var renderFilms = function (filmsData) {
       type.textContent = "Series";
       movieCard.appendChild(type);
     }
-    // TODO: Create div
     var poster = document.createElement("img");
     poster.classList = "poster";
     poster.setAttribute("src", filmsData[i].poster);
@@ -80,12 +79,22 @@ var renderFilms = function (filmsData) {
 sortByRaiting.addEventListener("change", function (e) {
   mainBlock.innerHTML = "";
   var value = e.target.value;
-  if (value === "asc") {
-    renderedFilmsList.sort(sortAsc);
-  } else {
-    renderedFilmsList.sort(sortDescend);
+  if (value === "rating-asc") {
+    renderedFilmsList.sort(function (a, b) {
+      return sortAsc(a, b, "imdbrating");
+    });
+  } else if (value === "rating-desc") {
+    renderedFilmsList.sort(function (a, b) {
+      return sortDescend(a, b, "imdbrating");
+    });
+  } else if (value === "year-asc") {
+    renderedFilmsList.sort(function (a, b) {
+      return sortAsc(a, b, "year");
+    });
+  } else if (value === "year-desc") {
+    renderedFilmsList.sort(function (a, b) {
+      return sortDescend(a, b, "year");
+    });
   }
-
-  console.log(renderedFilmsList);
   renderFilms(renderedFilmsList);
 });
