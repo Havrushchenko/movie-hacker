@@ -107,6 +107,6 @@ sortByRaiting.addEventListener("change", function (e) {
 function typeMovie(vtype) {
   return vtype === "movie";
 }
-console.log(vtype);
+console.log(typeMovie(vtype));
 var filterByMovie = renderedFilmsList.filter(typeMovie);
 console.log(filterByMovie);
