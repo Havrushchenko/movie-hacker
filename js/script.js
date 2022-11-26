@@ -99,15 +99,16 @@ sortByRaiting.addEventListener("change", function (e) {
   renderFilms(renderedFilmsList);
 });
 
-function typeMovie(film, type) {
+function getMovieType(film, type) {
   console.log(film);
   return film.vtype === type;
 }
 console.log(renderedFilmsList);
 
 filterFilm.addEventListener("click", function (e) {
+  const movieType = "movie" ;
   const filterByMovie = renderedFilmsList.filter((filmObject) =>
-    typeMovie(filmObject, "movie")
+    getMovieType(filmObject, movieType)
   );
 
   console.log(e);
