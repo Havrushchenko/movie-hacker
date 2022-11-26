@@ -96,24 +96,16 @@ sortByRaiting.addEventListener("change", function (e) {
   }
   renderFilms(renderedFilmsList);
 });
+function searchByTitle(e) {
+  var searchString = e.target.value.toLowerCase();
 
-document.addEventListener('DOMContentLoaded', () => {
-  
-  const getSearchBar = 
-      document.querySelector('#searchBar');
-  const getAllMovies = 
-      document.querySelectorAll('.movieWrapper');
-
-  getSearchBar.addEventListener('keyup', e => {
-      getAllMovies.forEach(movie => {
-          if (movie.innerText.toLowerCase().includes(
-              e.target.value.toLowerCase())) {
-              movie.style.display = 'block';
-              return movie;
-          }
-          else {
-              movie.style.display = 'none';
-          }
-      });
+  var searchFilm = renderedFilmsList.filter((film) => {
+    var filmTitle = film.title.toLowerCase();
+    return filmTitle.includes(searchString);
   });
-});
+
+  mainBlock.innerHTML = "";
+  renderFilms(searchFilm);
+}
+const getSearchBar = document.querySelector("#searchBar");
+getSearchBar.addEventListener("keyup", searchByTitle);
