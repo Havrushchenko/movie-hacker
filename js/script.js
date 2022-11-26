@@ -2,6 +2,7 @@ var API_KEY = "https://unogsng.p.rapidapi.com/search?limit=100";
 var renderedFilmsList = [];
 var sortByRaiting = document.getElementById("sort-by-rating");
 var mainBlock = document.getElementById("main-colm");
+var filterFilm = document.getElementById("filter");
 const options = {
   method: "GET",
   headers: {
@@ -22,6 +23,7 @@ fetch(API_KEY, options)
   .then(function (data) {
     renderedFilmsList = data.results;
     renderFilms(renderedFilmsList);
+
     // filterByMovie(renderedFilmsList);
   });
 var renderFilms = function (filmsData) {
@@ -97,16 +99,19 @@ sortByRaiting.addEventListener("change", function (e) {
   renderFilms(renderedFilmsList);
 });
 
-// function filterByMovie(renderedFilmsLis){
-//   if (filmsData.vtype === "movie"){
-//     return true
-//   } else if("movie" === "series") {
-//     return
-//   }
-// }
-function typeMovie(vtype) {
-  return vtype === "movie";
+function typeMovie(film, type) {
+  console.log(film);
+  return film.vtype === type;
 }
-console.log(typeMovie(vtype));
-var filterByMovie = renderedFilmsList.filter(typeMovie);
-console.log(filterByMovie);
+console.log(renderedFilmsList);
+
+filterFilm.addEventListener("click", function (e) {
+  const filterByMovie = renderedFilmsList.filter((filmObject) =>
+    typeMovie(filmObject, "movie")
+  );
+
+  console.log(e);
+  console.log(filterByMovie);
+  mainBlock.innerHTML = "";
+  renderFilms(filterByMovie);
+});
