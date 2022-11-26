@@ -116,3 +116,16 @@ filterFilm.addEventListener("click", function (e) {
   mainBlock.innerHTML = "";
   renderFilms(filterByMovie);
 });
+function searchByTitle(e) {
+  var searchString = e.target.value.toLowerCase();
+
+  var searchFilm = renderedFilmsList.filter((film) => {
+    var filmTitle = film.title.toLowerCase();
+    return filmTitle.includes(searchString);
+  });
+
+  mainBlock.innerHTML = "";
+  renderFilms(searchFilm);
+}
+const getSearchBar = document.querySelector("#searchBar");
+getSearchBar.addEventListener("keyup", searchByTitle);
