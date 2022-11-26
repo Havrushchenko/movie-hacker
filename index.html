@@ -45,7 +45,8 @@
         </div>
       </div>
   </header>
-  <div class="sort-block py-5 my-4  border-t-2 border-gray-400 border-b-2 border-gray-400">
+  <div class=" flex sort-block py-5 my-4  border-t-2 border-gray-400 border-b-2 border-gray-400">
+  <div >
     <label for="">Sort:</label>
     <select id="sort-by-rating">
       <option value="">Please choose an option</option>
@@ -57,6 +58,12 @@
       <option value="year-desc">By Year Descendings</option>
     </select>
   </div>
+  <div>
+    <form>
+      <input  id="searchBar" type="search" class="border-2 border-amber-400 rounded-lg py-2 px-4" placeholder="Search..." aria-label="Search">
+    </form>
+  </div>
+</div>
   <main>
     <!-- Wrapper start -->
     <div id="main-colm"

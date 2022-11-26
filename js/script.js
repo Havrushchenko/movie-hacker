@@ -22,9 +22,10 @@ fetch(API_KEY, options)
   .then(function (data) {
     renderedFilmsList = data.results;
     renderFilms(renderedFilmsList);
+    // filterByMovie(renderedFilmsList);
   });
 var renderFilms = function (filmsData) {
-  var loader = document.querySelector(".loader")
+  var loader = document.querySelector(".loader");
   loader.style.visibility = "hidden";
   for (var i = 0; i < filmsData.length; i++) {
     var movieCard = document.createElement("div");
@@ -95,3 +96,16 @@ sortByRaiting.addEventListener("change", function (e) {
   }
   renderFilms(renderedFilmsList);
 });
+function searchByTitle(e) {
+  var searchString = e.target.value.toLowerCase();
+
+  var searchFilm = renderedFilmsList.filter((film) => {
+    var filmTitle = film.title.toLowerCase();
+    return filmTitle.includes(searchString);
+  });
+
+  mainBlock.innerHTML = "";
+  renderFilms(searchFilm);
+}
+const getSearchBar = document.querySelector("#searchBar");
+getSearchBar.addEventListener("keyup", searchByTitle);
