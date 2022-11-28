@@ -47,25 +47,38 @@
         </div>
       </div>
   </header>
-  <div class="flex sort-block py-5 my-4  border-t-2 border-gray-400 border-b-2 border-gray-400">
-    <div>
-      <label for="">Sort:</label>
-      <select id="sort-by-rating">
+  <div class="sm: block p-10 lg:flex justify-around	 sort-block py-5 my-4  border-t-2 border-gray-400 border-b-2 border-gray-400">
+    <div class="sm: p-3 lg: border-2 border-amber-400 rounded-lg py-2 px-4">
+      <label  for="">Sort:</label>
+      <select class="p-2" id="sort-by-rating">
         <option value="">Please choose an option</option>
         <option value="rating-asc">By Rating Ascending</option>
         <option value="rating-desc">By Rating Descendings</option>
         <option value="year-asc">By Year Ascending</option>
         <option value="year-desc">By Year Descendings</option>
-        <option value="year-asc">By Year Ascending</option>
-        <option value="year-desc">By Year Descendings</option>
+
       </select>
     </div>
-    <div>
-      <button id="filter">filter</button>
+    <div class=" border-2 border-amber-400 rounded-lg py-2 px-4">
+      <fieldset class=" flex" id="filteContainer">
+        <div>
+          <legend class="p-2">Filter by type:</legend>
+        </div>
+        <div class="p-2">
+          <input type="checkbox" id="movie" name="movie">
+          <label for="movie">Movie</label>
+        </div>
+
+        <div class="p-2">
+          <input type="checkbox" id="series" name="series">
+          <label for="series">Series</label>
+        </div>
+      </fieldset>
     </div>
-    <div>
-      <form>
-        <input  id="searchBar" type="search" class="border-2 border-amber-400 rounded-lg py-2 px-4" placeholder="Search..." aria-label="Search">
+    <div class=" border-2 border-amber-400 rounded-lg py-2 px-4 ">
+      <form  class="p-2">
+        <input id="searchBar" type="search" 
+          placeholder="Search..." aria-label="Search">
       </form>
     </div>
   </div>

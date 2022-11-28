@@ -2,7 +2,11 @@ var API_KEY = "https://unogsng.p.rapidapi.com/search?limit=100";
 var renderedFilmsList = [];
 var sortByRaiting = document.getElementById("sort-by-rating");
 var mainBlock = document.getElementById("main-colm");
-var filterFilm = document.getElementById("filter");
+var movieCheck = document.getElementById("movie");
+var seriesCheck = document.getElementById("series");
+var filteContainer = document.getElementById("filteContainer");
+const getSearchBar = document.querySelector("#searchBar");
+
 const options = {
   method: "GET",
   headers: {
@@ -99,23 +103,27 @@ sortByRaiting.addEventListener("change", function (e) {
   renderFilms(renderedFilmsList);
 });
 
-function getMovieType(film, type) {
-  console.log(film);
-  return film.vtype === type;
+function getMovieType(film, isMovieChecked, isSeriesChecked) {
+  var shoudIncludMovieInTheList = false;
+  if (film.vtype === "movie" && isMovieChecked) {
+    shoudIncludMovieInTheList = true;
+  } else if (film.vtype === "series" && isSeriesChecked) {
+    shoudIncludMovieInTheList = true;
+  }
+  console.log("should i add movie", shoudIncludMovieInTheList);
+  return shoudIncludMovieInTheList;
 }
-console.log(renderedFilmsList);
 
-filterFilm.addEventListener("click", function (e) {
-  const movieType = "movie" ;
+filteContainer.addEventListener("change", function (e) {
+  var targetMovie = movieCheck.checked;
+  var targetSeries = seriesCheck.checked;
   const filterByMovie = renderedFilmsList.filter((filmObject) =>
-    getMovieType(filmObject, movieType)
+    getMovieType(filmObject, targetMovie, targetSeries)
   );
-
-  console.log(e);
-  console.log(filterByMovie);
   mainBlock.innerHTML = "";
   renderFilms(filterByMovie);
 });
+
 function searchByTitle(e) {
   var searchString = e.target.value.toLowerCase();
 
@@ -127,5 +135,4 @@ function searchByTitle(e) {
   mainBlock.innerHTML = "";
   renderFilms(searchFilm);
 }
-const getSearchBar = document.querySelector("#searchBar");
 getSearchBar.addEventListener("keyup", searchByTitle);
