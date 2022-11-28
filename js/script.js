@@ -2,6 +2,11 @@ var API_KEY = "https://unogsng.p.rapidapi.com/search?limit=100";
 var renderedFilmsList = [];
 var sortByRaiting = document.getElementById("sort-by-rating");
 var mainBlock = document.getElementById("main-colm");
+var movieCheck = document.getElementById("movie");
+var seriesCheck = document.getElementById("series");
+var filteContainer = document.getElementById("filteContainer");
+const getSearchBar = document.querySelector("#searchBar");
+
 const options = {
   method: "GET",
   headers: {
@@ -22,6 +27,7 @@ fetch(API_KEY, options)
   .then(function (data) {
     renderedFilmsList = data.results;
     renderFilms(renderedFilmsList);
+
     // filterByMovie(renderedFilmsList);
   });
 var renderFilms = function (filmsData) {
@@ -96,6 +102,28 @@ sortByRaiting.addEventListener("change", function (e) {
   }
   renderFilms(renderedFilmsList);
 });
+
+function getMovieType(film, isMovieChecked, isSeriesChecked) {
+  var shoudIncludMovieInTheList = false;
+  if (film.vtype === "movie" && isMovieChecked) {
+    shoudIncludMovieInTheList = true;
+  } else if (film.vtype === "series" && isSeriesChecked) {
+    shoudIncludMovieInTheList = true;
+  }
+  console.log("should i add movie", shoudIncludMovieInTheList);
+  return shoudIncludMovieInTheList;
+}
+
+filteContainer.addEventListener("change", function (e) {
+  var targetMovie = movieCheck.checked;
+  var targetSeries = seriesCheck.checked;
+  const filterByMovie = renderedFilmsList.filter((filmObject) =>
+    getMovieType(filmObject, targetMovie, targetSeries)
+  );
+  mainBlock.innerHTML = "";
+  renderFilms(filterByMovie);
+});
+
 function searchByTitle(e) {
   var searchString = e.target.value.toLowerCase();
 
@@ -107,5 +135,4 @@ function searchByTitle(e) {
   mainBlock.innerHTML = "";
   renderFilms(searchFilm);
 }
-const getSearchBar = document.querySelector("#searchBar");
 getSearchBar.addEventListener("keyup", searchByTitle);
